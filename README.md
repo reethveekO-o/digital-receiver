@@ -17,11 +17,11 @@ the design runs in both Icarus Verilog and the Vivado simulator.
 ## Background
 
 The DDS and the 1024-point FFT were developed during a research internship at
-the Centre for Airborne Systems, DRDO, as the signal-processing core of a
-receiver planned for a Xilinx ZCU208 RFSoC board. They are shared with my
-supervisor's permission. The board was not available, so I built the rest of
-the receiver chain afterwards in simulation, with a model standing in for the
-ADC.
+the Centre for Airborne Systems (CABS), DRDO, Bengaluru, under the guidance of
+Dr. Gopi Kumar Nasanna, as the signal-processing core of a receiver planned for
+a Xilinx ZCU208 RFSoC board. They are shared with his permission. The board was
+not available, so I built the rest of the receiver chain afterwards in
+simulation, with a model standing in for the ADC.
 
 ## Signal chain
 
@@ -223,3 +223,10 @@ requirements.txt   Python packages
 A parallel (multi-sample-per-clock) front end, a pipelined FFT for continuous
 data, detection of several signals per frame, the processor-side software and
 the UDP/Ethernet link that would carry the packets, and bring-up on hardware.
+
+## Acknowledgements
+
+- **Centre for Airborne Systems (CABS), Defence Research and Development
+  Organisation (DRDO)**, where the DDS and FFT work was carried out.
+- **Dr. Gopi Kumar Nasanna**, our guide at CABS, for the problem statement, the
+  proposed receiver architecture and his guidance throughout the internship.
