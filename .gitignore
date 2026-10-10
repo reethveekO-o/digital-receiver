@@ -1,0 +1,28 @@
+# simulation output
+build/
+*.vvp
+*.vcd
+*.wdb
+
+# Vivado project and generated folders
+*.xpr
+*.cache/
+*.gen/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+.Xil/
+*.jou
+*.log
+*.str
+
+# Python
+__pycache__/
+.venv/
+*venv/
+
+# editor and OS files
+.vscode/
+desktop.ini
+Thumbs.db
