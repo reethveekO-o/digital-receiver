@@ -23,31 +23,7 @@ a Xilinx ZCU208 RFSoC board.
 
 ## Signal chain
 
-```mermaid
-flowchart TD
-    SRC["<b>RF test tone</b><br/>DDS, 1100 MHz"] --> ADC["<b>ADC model</b><br/>14 bits"]
-    ADC -->|"real samples, 5 GSPS"| MIX["<b>ddc_mixer</b><br/>multiply by a 1000 MHz complex oscillator"]
-    MIX -->|"I/Q, 5 GSPS"| FIR["<b>fir_decimator</b><br/>48-tap low-pass, keep 1 sample in 4"]
-    FIR -->|"I/Q, 1.25 GSPS"| CAP["<b>fft_frame_capture</b><br/>Hann window, 1024 samples, FFT"]
-    CAP -->|"1024 bins, 1.22 MHz apart"| PEAK["<b>peak_detector</b><br/>strongest bin and its two neighbours"]
-    PEAK --> PKT["<b>result_packetizer</b><br/>52-byte packet, one byte per clock"]
-    PKT -->|"packet bytes"| HOST["<b>python/host.py</b><br/>decode, estimate the frequency"]
-
-    subgraph TB["Testbench (simulation only)"]
-        SRC
-        ADC
-    end
-    subgraph RX["digital_receiver (Verilog)"]
-        MIX
-        FIR
-        CAP
-        PEAK
-        PKT
-    end
-    subgraph PC["Host PC (Python)"]
-        HOST
-    end
-```
+![Signal chain from the test tone to the host PC](docs/signal_chain.png)
 
 | Block | File | What it does |
 |---|---|---|
