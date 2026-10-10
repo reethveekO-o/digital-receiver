@@ -23,21 +23,30 @@ a Xilinx ZCU208 RFSoC board.
 
 ## Signal chain
 
-```
-RF test tone (DDS)  ->  ADC model, 14 bits          tb/        simulation only
-                              |
-                              v   real samples, 5 GSPS
-                        ddc_mixer                   multiply by a 1000 MHz complex oscillator
-                              |   I/Q, 5 GSPS
-                        fir_decimator               48-tap low-pass, keep 1 sample in 4
-                              |   I/Q, 1.25 GSPS
-                        fft_frame_capture           Hann window, 1024 samples, FFT
-                              |   1024 bins, 1.22 MHz apart
-                        peak_detector               strongest bin and its two neighbours
-                              |
-                        result_packetizer           52-byte packet, one byte per clock
-                              |
-                        python/host.py              decode, estimate the frequency
+```mermaid
+flowchart TD
+    SRC["<b>RF test tone</b><br/>DDS, 1100 MHz"] --> ADC["<b>ADC model</b><br/>14 bits"]
+    ADC -->|"real samples, 5 GSPS"| MIX["<b>ddc_mixer</b><br/>multiply by a 1000 MHz complex oscillator"]
+    MIX -->|"I/Q, 5 GSPS"| FIR["<b>fir_decimator</b><br/>48-tap low-pass, keep 1 sample in 4"]
+    FIR -->|"I/Q, 1.25 GSPS"| CAP["<b>fft_frame_capture</b><br/>Hann window, 1024 samples, FFT"]
+    CAP -->|"1024 bins, 1.22 MHz apart"| PEAK["<b>peak_detector</b><br/>strongest bin and its two neighbours"]
+    PEAK --> PKT["<b>result_packetizer</b><br/>52-byte packet, one byte per clock"]
+    PKT -->|"packet bytes"| HOST["<b>python/host.py</b><br/>decode, estimate the frequency"]
+
+    subgraph TB["Testbench (simulation only)"]
+        SRC
+        ADC
+    end
+    subgraph RX["digital_receiver (Verilog)"]
+        MIX
+        FIR
+        CAP
+        PEAK
+        PKT
+    end
+    subgraph PC["Host PC (Python)"]
+        HOST
+    end
 ```
 
 | Block | File | What it does |
