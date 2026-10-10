@@ -19,9 +19,7 @@ the design runs in both Icarus Verilog and the Vivado simulator.
 The DDS and the 1024-point FFT were developed during a research internship at
 the Centre for Airborne Systems (CABS), DRDO, Bengaluru, under the guidance of
 Dr. Gopi Kumar Nasanna, as the signal-processing core of a receiver planned for
-a Xilinx ZCU208 RFSoC board. They are shared with his permission. The board was
-not available, so I built the rest of the receiver chain afterwards in
-simulation, with a model standing in for the ADC.
+a Xilinx ZCU208 RFSoC board.
 
 ## Signal chain
 
